@@ -1,5 +1,37 @@
 /* The design comes from Pico CSS (pico.classless.min.css).
    This file holds only the small changes on top of it. */
 
+:root {
+  /* Magenta of the active window frame in Solaris CDE. */
+  --bar: #b24d7a;
+  /* Its complement (green), darkened so link text is easy to read. */
+  --link: #1f7a54;
+  --link-hover: #155a3d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --link: #6fcfa3;
+    --link-hover: #97e0be;
+  }
+}
+
+/* Colored bar across the top of the page. */
+body::before {
+  content: "";
+  display: block;
+  height: 0.75rem;
+  background: var(--bar);
+}
+
+a {
+  --pico-color: var(--link);
+  --pico-underline: var(--link);
+}
+a:hover, a:active, a:focus {
+  --pico-color: var(--link-hover);
+  --pico-underline: var(--link-hover);
+}
+
 /* Keep lines of text at a width that is easy to read. */
 body > main { max-width: 42rem; }
