@@ -34,8 +34,10 @@ fi
 sed -E -i.bak -e '/^#{1,6} /s/\*\*//g' -e 's/[[:space:]]+$//' _site/content.md
 rm _site/content.md.bak
 
-# 3. Put the photo (photo.html) directly below the title.
-{ head -n 1 _site/content.md; echo; cat photo.html; tail -n +2 _site/content.md; } > _site/content.tmp
+# 3. Put the photo (photo.html) directly below the first paragraph.
+#    The title is the first line with text; the first paragraph is the second.
+awk 'NF { n++ } { print } NF && n == 2 && !done { print ""; system("cat photo.html"); done = 1 }' \
+  _site/content.md > _site/content.tmp
 mv _site/content.tmp _site/content.md
 
 # 4. Page title = the first heading. Description = the first paragraph.

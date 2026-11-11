@@ -33,10 +33,10 @@ a:hover, a:active, a:focus {
   --pico-underline: var(--link-hover);
 }
 
-/* The photo: small, at the right, with the text around it. */
+/* The photo: at the right, with the text around it. */
 .photo {
   float: right;
-  width: 42%;
+  width: 52%;
   margin: 0.35rem 0 1rem 1.5rem;
 }
 .photo img {
@@ -44,6 +44,10 @@ a:hover, a:active, a:focus {
   width: 100%;
   height: auto;
   border-radius: 4px;
+}
+/* On a wide screen, the photo extends past the right edge of the text. */
+@media (min-width: 62rem) {
+  .photo { margin-right: -4.5rem; }
 }
 /* On a phone there is no room for text beside it. */
 @media (max-width: 34rem) {
