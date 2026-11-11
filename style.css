@@ -39,11 +39,15 @@ h2 { font-size: 1.4rem; }
 h3 { font-size: 1.15rem; }
 h4, h5, h6 { font-size: 1rem; }
 
-/* The photo: at the right, with the text around it. */
+/* The photo: at the right, with the text around it.
+   --jut is how far the photo extends past the right edge of the text.
+   It uses the empty margin of the page: none on a narrow screen,
+   up to 7rem on a wide screen. */
 .photo {
+  --jut: clamp(0px, (100vw - 42rem) / 2 - 0.5rem, 7rem);
   float: right;
-  width: 52%;
-  margin: 0.35rem 0 1rem 1.5rem;
+  width: calc(50% + var(--jut));
+  margin: 0.35rem calc(-1 * var(--jut)) 1rem 1.5rem;
 }
 .photo img {
   display: block;
@@ -51,10 +55,8 @@ h4, h5, h6 { font-size: 1rem; }
   height: auto;
   border-radius: 4px;
 }
-/* On a wide screen, the photo extends past the right edge of the text. */
-@media (min-width: 62rem) {
-  .photo { margin-right: -4.5rem; }
-}
+/* A section heading always starts below the photo. */
+h2 { clear: both; }
 /* On a phone there is no room for text beside it. */
 @media (max-width: 34rem) {
   .photo { float: none; width: 100%; margin: 0 0 1.25rem; }
