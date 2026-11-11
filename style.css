@@ -1,0 +1,5 @@
+/* The design comes from Pico CSS (pico.classless.min.css).
+   This file holds only the small changes on top of it. */
+
+/* Keep lines of text at a width that is easy to read. */
+body > main { max-width: 42rem; }

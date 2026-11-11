@@ -1,0 +1,42 @@
+name: Publish site
+
+# Runs when someone selects "Run workflow" on the Actions tab,
+# and when the template, the styles, or the build script change.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install pandoc
+        run: |
+          curl --fail --silent --show-error --location -o pandoc.deb \
+            https://github.com/jgm/pandoc/releases/download/3.13/pandoc-3.13-1-amd64.deb
+          sudo dpkg -i pandoc.deb
+          rm pandoc.deb
+      - name: Build the page from the Google Doc
+        run: ./build.sh
+        env:
+          DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v5
