@@ -33,6 +33,12 @@ a:hover, a:active, a:focus {
   --pico-underline: var(--link-hover);
 }
 
+/* Heading sizes: Pico makes h1 and h2 almost the same size. */
+h1 { font-size: 2.6rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.15rem; }
+h4, h5, h6 { font-size: 1rem; }
+
 /* The photo: at the right, with the text around it. */
 .photo {
   float: right;
