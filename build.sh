@@ -34,12 +34,16 @@ fi
 sed -E -i.bak -e '/^#{1,6} /s/\*\*//g' -e 's/[[:space:]]+$//' _site/content.md
 rm _site/content.md.bak
 
-# 3. Page title = the first heading. Description = the first paragraph.
+# 3. Put the photo (photo.html) directly below the title.
+{ head -n 1 _site/content.md; echo; cat photo.html; tail -n +2 _site/content.md; } > _site/content.tmp
+mv _site/content.tmp _site/content.md
+
+# 4. Page title = the first heading. Description = the first paragraph.
 title=$(head -n 1 _site/content.md | sed -E 's/^# +//')
 description=$(pandoc -f markdown -t plain --wrap=none _site/content.md \
   | awk 'NF { n++; if (n == 2) { print; exit } }')
 
-# 4. Convert to HTML.
+# 5. Convert to HTML.
 pandoc -f markdown -t html5 --wrap=none \
   --template=template.html \
   --metadata pagetitle="$title" \
@@ -47,5 +51,5 @@ pandoc -f markdown -t html5 --wrap=none \
   -o _site/index.html _site/content.md
 
 rm _site/content.md
-cp pico.classless.min.css style.css _site/
+cp pico.classless.min.css style.css community-standup.jpg _site/
 echo "Built _site/index.html"
