@@ -13,7 +13,8 @@ if [ -z "$DOC_ID" ]; then
   echo "Error: no Doc ID. Set DOC_ID or create a .doc-id file." >&2
   exit 1
 fi
-DOC_URL="https://docs.google.com/document/d/${DOC_ID}/export?format=md"
+# tab=t.0 asks for the first tab only. Other tabs in the Doc are not published.
+DOC_URL="https://docs.google.com/document/d/${DOC_ID}/export?format=md&tab=t.0"
 
 rm -rf _site
 mkdir -p _site
@@ -26,6 +27,13 @@ if ! head -n 1 _site/content.md | grep -q '^# '; then
   echo "Error: the Doc did not come back as Markdown that starts with a title." >&2
   echo "Check that the Doc is shared as 'Anyone with the link can view'" >&2
   echo "and that its first line uses the Title or Heading 1 style." >&2
+  exit 1
+fi
+
+# A second level-1 heading means a second tab came through. Stop.
+if [ "$(grep -c '^# ' _site/content.md)" -ne 1 ]; then
+  echo "Error: the Doc has more than one title (Heading 1)." >&2
+  echo "The page must have one. A second tab may have been exported." >&2
   exit 1
 fi
 

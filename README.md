@@ -20,6 +20,8 @@ The site updates in about one minute.
 - The first line must use the Title or Heading 1 style. It becomes the page title.
 - The first paragraph becomes the description that search engines and link previews show.
 - Use Heading 2 for section headings.
+- Only the first tab of the Doc is published. Use other tabs for notes.
+- Use the Title or Heading 1 style one time only. The build stops if it finds two.
 
 ## How it works
 
